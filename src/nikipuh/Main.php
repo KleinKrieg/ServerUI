@@ -22,12 +22,12 @@ class Main extends PluginBase implements Listener{
         $player = $sender->getPlayer();
         switch ($cmd->getName()){
             case "menü":
-                $this->Menu($player);
+                $this->mainFrom($player);
                 break;
         }
         return true;
     }
-    public function Menu($player){
+    public function mainFrom($player){
         $plugin = $this->getServer()->getPluginManager();
         $formapi = $plugin->getPlugin("FormAPI");
         $form = $formapi->createSimpleForm(function (Player $event, array $args){
@@ -39,9 +39,6 @@ class Main extends PluginBase implements Listener{
                 case 0:
                     return;
                 case 1:
-                    $this->factionsForm($player);
-                    return;
-                case 2:
                     $this->shopForm($player);
                     return;
                     }
@@ -50,10 +47,9 @@ class Main extends PluginBase implements Listener{
         $name = $player->getName();
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
-        $form->setContent("Willkommen im Menu, $name!\nDein Geld: " . $money);
-        $form->addButton(TextFormat::GREEN."Verlasse das Menü");
-        $form->addButton(TextFormat::WHITE."Fraktion");
-        $form->addButton(TextFormat::WHITE."ItemShop");
+        $form->setContent("Willkommen im Menu, $name! \nDein Geld: §c" . $money);
+        $form->addButton("§cVerlasse das Menü");
+        $form->addButton("§0ItemShop");
         $form->sendToPlayer($player);
     }
     public function shopForm($player){
@@ -78,14 +74,8 @@ class Main extends PluginBase implements Listener{
                     $this->armorsForm($player);
                     return;
                 case 4:
-                    $this->blocksForm($player);
-                    return;
-                case 5:
                     $this->specialitemsForm($player);
-                    return;
-                case 6:
-                    $this->maskForm($player);
-                    return;
+                    return;     
             }
         });
         $form->setTitle(TextFormat::WHITE . "ItemShop");
@@ -93,13 +83,11 @@ class Main extends PluginBase implements Listener{
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
         $form->setContent("Dein Geld: " . $money);
-        $form->addButton(TextFormat::GREEN."Zum Hauptmenü");
-        $form->addButton(TextFormat::WHITE."Waffen");
-        $form->addButton(TextFormat::WHITE."Items");
-        $form->addButton(TextFormat::WHITE."Rüstung");
-        $form->addButton(TextFormat::WHITE."Blöcke");
-        $form->addButton(TextFormat::WHITE."Spezielle Items");
-        $form->addButton(TextFormat::WHITE."Masken");
+        $form->addButton(TextFormat::GREEN."§cZurück");
+        $form->addButton(TextFormat::WHITE."§0Waffen");
+        $form->addButton(TextFormat::WHITE."§0Werkzeuge");
+        $form->addButton(TextFormat::WHITE."§0Rüstungsteile");
+        $form->addButton(TextFormat::WHITE."§0Spezielle Items");
         $form->sendToPlayer($player);
     }
     public function weaponsForm($player){
@@ -119,8 +107,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 268;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 2500);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 2:
@@ -129,8 +118,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 272;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 5000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                       $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 3:
@@ -139,8 +129,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 267;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 10000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 4:
@@ -149,8 +140,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 283;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 15000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 5:
@@ -159,8 +151,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 276;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 25000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 6:
@@ -169,8 +162,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 261;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 2000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 7:
@@ -179,8 +173,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 262;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 64));
                         EconomyAPI::getInstance()->reduceMoney($player, 3000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                       $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
             }
@@ -191,13 +186,13 @@ class Main extends PluginBase implements Listener{
         $money = $eco->myMoney($name);
         $form->setContent("Dein Geld: " . $money);
         $form->addButton("Zurück zum ShopMenü");
-        $form->addButton("Holzschwert: $2500", 0, "textures/items/wood_sword");
-        $form->addButton("Steinschwert: $5000", 0, "textures/items/stone_sword");
-        $form->addButton("Goldschwert: $10000", 0, "textures/items/gold_sword");
-        $form->addButton("Eisenschwert: $15000", 0, "textures/items/iron_sword");
-        $form->addButton("Diamantenschwert: $25000", 0, "textures/items/diamond_sword");
-        $form->addButton("Bogen: $2000", 0, "textures/items/bow_standby");
-        $form->addButton("Pfeile(64x): $3000", 0, "textures/items/arrow");
+        $form->addButton("§0Holzschwert: $2500", 0, "textures/items/wood_sword");
+        $form->addButton("§0Steinschwert: $5000", 0, "textures/items/stone_sword");
+        $form->addButton("§0Goldschwert: $10000", 0, "textures/items/gold_sword");
+        $form->addButton("§0Eisenschwert: $15000", 0, "textures/items/iron_sword");
+        $form->addButton("§0Diamantenschwert: $25000", 0, "textures/items/diamond_sword");
+        $form->addButton("§0Bogen: $2000", 0, "textures/items/bow_standby");
+        $form->addButton("§0Pfeile(64x): $3000", 0, "textures/items/arrow");
         $form->sendToPlayer($player);
     }
     public function toolsForm($player){
@@ -217,8 +212,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 278;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 25000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 2:
@@ -227,8 +223,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 285;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 15000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 3:
@@ -237,8 +234,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 257;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 20000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 4:
@@ -247,8 +245,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 274;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 5000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 5:
@@ -257,23 +256,24 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 270;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 2500);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
             }
         });
-        $form->setTitle("Tools");
+        $form->setTitle("Werkzeuge");
         $name = $player->getName();
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
-        $form->setContent("Your Money: " . $money);
-        $form->addButton("Back, to main menu!");
-        $form->addButton("Diamond Pickaxe : $25000", 0, "textures/items/diamond_pickaxe");
-        $form->addButton("Gold Pickaxe : $15000", 0, "textures/items/gold_pickaxe");
-        $form->addButton("Iron Pickaxe : $10000", 0, "textures/items/iron_pickaxe");
-        $form->addButton("Stone Pickaxe : $5000", 0, "textures/items/stone_pickaxe");
-        $form->addButton("Wood Pickaxe : $2500", 0, "textures/items/wood_pickaxe");
+        $form->setContent("Dein Geld: " . $money);
+        $form->addButton("§cZurück");
+        $form->addButton("§0Diamantenspitzhacke : $25000", 0, "textures/items/diamond_pickaxe");
+        $form->addButton("§0Goldspitzhacke: $15000", 0, "textures/items/gold_pickaxe");
+        $form->addButton("§0Eisenspitzhacke: $10000", 0, "textures/items/iron_pickaxe");
+        $form->addButton("§0Steinspitzhacke: $5000", 0, "textures/items/stone_pickaxe");
+        $form->addButton("§0Holzspitzhacke: $2500", 0, "textures/items/wood_pickaxe");
         $form->sendToPlayer($player);
     }
     public function armorsForm($player){
@@ -293,8 +293,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 310;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 25000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                       $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 2:
@@ -303,8 +304,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 311;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 25000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                       $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 3:
@@ -313,8 +315,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 312;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 25000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 4:
@@ -323,8 +326,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 313;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 25000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                       $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 5:
@@ -333,8 +337,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 302;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 15000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                       $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 6:
@@ -343,8 +348,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 303;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 15000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                       $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 7:
@@ -353,8 +359,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 304;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 15000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                       $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 8:
@@ -363,8 +370,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 305;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 15000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 9:
@@ -373,8 +381,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 306;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 17000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                       $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 10:
@@ -383,8 +392,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 307;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 17000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 11:
@@ -393,8 +403,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 308;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 17000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 12:
@@ -403,8 +414,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 309;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 17000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 13:
@@ -413,8 +425,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 314;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 12000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 14:
@@ -423,8 +436,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 315;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 12000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 15:
@@ -433,8 +447,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 317;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 12000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 16:
@@ -443,8 +458,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 317;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 12000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                       $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 17:
@@ -453,8 +469,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 298;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 10000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 18:
@@ -463,8 +480,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 299;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 10000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 19:
@@ -473,8 +491,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 300;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 10000);
+                        $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 20:
@@ -483,43 +502,44 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 201;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 10000);
+                         $player->sendMessage("Du hast dir ein neues Rüstungsteil zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
             }
         });
-        $form->setTitle("Armour");
+        $form->setTitle("Rüstungsteile");
         $name = $player->getName();
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
-        $form->setContent("Your Money: " . $money);
-        $form->addButton("Back, to main menu!");
+        $form->setContent("Dein Geld: " . $money);
+        $form->addButton("§cZurück");
         //DIAMOND
-        $form->addButton("Diamond Helmet : $25000", 0, "textures/items/diamond_helmet");
-        $form->addButton("Diamond Chestplate : $25000", 0, "textures/items/diamond_chestplate");
-        $form->addButton("Diamond Leggings : $25000", 0, "textures/items/diamond_leggings");
-        $form->addButton("Diamond Boots : $25000", 0, "textures/items/diamond_boots");
+        $form->addButton("§0Diamantenhelm: $25000", 0, "textures/items/diamond_helmet");
+        $form->addButton("§0Diamantenbrustplatte: $25000", 0, "textures/items/diamond_chestplate");
+        $form->addButton("§0Diamantenbeinschutz: $25000", 0, "textures/items/diamond_leggings");
+        $form->addButton("§0Diamantenschuhe: $25000", 0, "textures/items/diamond_boots");
         //chainmail
-        $form->addButton("Chainmail Helmet : $15000", 0, "textures/items/chainmail_helmet");
-        $form->addButton("Chainmail Chestplate : $15000", 0, "textures/items/chainmail_chestplate");
-        $form->addButton("Chainmail Leggings : $15000", 0, "textures/items/chainmail_leggings");
-        $form->addButton("Chainmail Boots : $15000", 0, "textures/items/chainmail_boots");
+        $form->addButton("§0Kettenhut: $15000", 0, "textures/items/chainmail_helmet");
+        $form->addButton("§0Kettenhemd: $15000", 0, "textures/items/chainmail_chestplate");
+        $form->addButton("§0Kettenhose: $15000", 0, "textures/items/chainmail_leggings");
+        $form->addButton("§0Kettenschuhe: $15000", 0, "textures/items/chainmail_boots");
         //IRON
-        $form->addButton("Iron Helmet : $17000", 0, "textures/items/iron_helmet");
-        $form->addButton("Iron Chestplate : $17000", 0, "textures/items/iron_chestplate");
-        $form->addButton("Iron Leggings : $17000", 0, "textures/items/iron_leggings");
-        $form->addButton("Iron Boots : $17000", 0, "textures/items/iron_boots");
+        $form->addButton("§0Eisenhelm: $17000", 0, "textures/items/iron_helmet");
+        $form->addButton("§0Eisenbrustplatte: $17000", 0, "textures/items/iron_chestplate");
+        $form->addButton("§0Eisenbeinschutz: $17000", 0, "textures/items/iron_leggings");
+        $form->addButton("§0Eisenschuhe: $17000", 0, "textures/items/iron_boots");
         //GOLD
-        $form->addButton("Gold Helmet : $12000", 0, "textures/items/gold_helmet");
-        $form->addButton("Gold Chestplate : $12000", 0, "textures/items/gold_chestplate");
-        $form->addButton("gold Leggings : $12000", 0, "textures/items/gold_leggings");
-        $form->addButton("gold Boots : $12000", 0, "textures/items/gold_boots");
+        $form->addButton("§0Goldhelm: $12000", 0, "textures/items/gold_helmet");
+        $form->addButton("§0Goldbrustpanzer: $12000", 0, "textures/items/gold_chestplate");
+        $form->addButton("§0Goldbeinschutz: $12000", 0, "textures/items/gold_leggings");
+        $form->addButton("§0Goldschuhe: $12000", 0, "textures/items/gold_boots");
         //LEATHER
-        $form->addButton("Leather Helmet : $10000", 0, "textures/items/leather_helmet");
-        $form->addButton("Leather Chestplate : $10000", 0, "textures/items/leather_chestplate");
-        $form->addButton("Leather Leggings : $10000", 0, "textures/items/leather_leggings");
-        $form->addButton("Leather Boots : $10000", 0, "textures/items/leather_boots");
+        $form->addButton("§0Lederhut: $10000", 0, "textures/items/leather_helmet");
+        $form->addButton("§0Ledershirt: $10000", 0, "textures/items/leather_chestplate");
+        $form->addButton("§0Lederhose: $10000", 0, "textures/items/leather_leggings");
+        $form->addButton("§0Ledersöckchen: $10000", 0, "textures/items/leather_boots");
         $form->sendToPlayer($player);
     }
     public function specialitemsForm($player){
@@ -539,8 +559,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 466;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 20000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 13:
@@ -549,8 +570,9 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 322;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 15000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
                 case 3:
@@ -559,214 +581,22 @@ class Main extends PluginBase implements Listener{
                         $this->itemId = 396;
                         $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
                         EconomyAPI::getInstance()->reduceMoney($player, 10000);
+                        $player->sendMessage("Du hast dir ein neues Item zugelegt.");
                     }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
+                        $player->sendMessage("Du hast nicht genug Geld.");
                     }
                     break;
             }
         });
-        $form->setTitle("Special Items");
+        $form->setTitle("Spezielle Items");
         $name = $player->getName();
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
-        $form->setContent("Your Money: " . $money);
-        $form->addButton("Back, to main menu!");
-        $form->addButton("Enchanted Gapples : $20000", 1, "https://www.digminecraft.com/food_recipes/images/golden_apple2.png");
-        $form->addButton("Gapples : $150000", 1, "https://www.digminecraft.com/food_recipes/images/golden_apple.png");
-        $form->addButton("Golden Carrot : $10000", 1, "https://www.digminecraft.com/food_recipes/images/golden_carrot.png");
-        $form->sendToPlayer($player);
-    }
-    public function maskForm($player)
-    {
-        $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-        $form = $api->createSimpleForm(function (Player $event, array $data) {
-            $result = $data[0];
-            $player = $event->getPlayer();
-            if ($result === null) {
-            }
-            switch ($result) {
-                case 0:
-                    $this->mainFrom($player);
-                    break;
-                case 1:
-                    $money = EconomyAPI::getInstance()->myMoney($player->getName());
-                    if ($money >= 10000) {
-                        $this->itemId = 397;
-                        $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
-                        EconomyAPI::getInstance()->reduceMoney($player, 10000);
-                    }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
-                    }
-                    break;
-                case 2:
-                    $money = EconomyAPI::getInstance()->myMoney($player->getName());
-                    if ($money >= 5000) {
-                        $this->itemId = 298;
-                        $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
-                        EconomyAPI::getInstance()->reduceMoney($player, 5000);
-                    }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
-                    }
-                    break;
-                case 3:
-                    $this->itemId = 397;
-                    $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
-                    EconomyAPI::getInstance()->reduceMoney($player, 2000);
-                    break;
-                case 4:
-                    $this->itemId = 397;
-                    $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
-                    EconomyAPI::getInstance()->reduceMoney($player, 1000);
-                    break;
-                case 5:
-                    $this->itemId = 397;
-                    $player->getInventory()->addItem(Item::get($this->itemId, 0, 1));
-                    EconomyAPI::getInstance()->reduceMoney($player, 1000);
-                    break;
-            }
-        });
-        $form->setTitle("Masks");
-        $name = $player->getName();
-        $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
-        $money = $eco->myMoney($name);
-        $form->setContent("Your Money: " . $money);
-        $form->addButton("Back, to main menu!");
-        $form->addButton("Dragon : $10000", 1, "https://img4.hostingpics.net/pics/436796skulldragon.png");
-        $form->addButton("Wither : $5000", 1, "https://img4.hostingpics.net/pics/826437skullwither.png");
-        $form->addButton("Creeper : $2000", 1, "https://img4.hostingpics.net/pics/556676skullcreeper.png");
-        $form->addButton("Zombie : $1000", 1, "https://img4.hostingpics.net/pics/415562skullzombie.png");
-        $form->addButton("Skeleton : $1000", 1, "https://img4.hostingpics.net/pics/589367skullskeleton.png");
-        $form->sendToPlayer($player);
-    }
-    public function blocksForm($player){
-        $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-        $form = $api->createSimpleForm(function (Player $event, array $data){
-            $result = $data[0];
-            $player = $event->getPlayer();
-            if($result === null){
-            }
-            switch($result){
-                case 0:
-                    $this->mainFrom($player);
-                    break;
-                case 1:
-                    $money = EconomyAPI::getInstance()->myMoney($player->getName());
-                    if ($money >= 25000) {
-                        $this->itemId = 1;
-                        $player->getInventory()->addItem(Item::get($this->itemId, 0, 64));
-                        EconomyAPI::getInstance()->reduceMoney($player, 25000);
-                    }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
-                    }
-                    break;
-                case 2:
-                    $money = EconomyAPI::getInstance()->myMoney($player->getName());
-                    if ($money >= 25000) {
-                        $this->itemId = 17;
-                        $player->getInventory()->addItem(Item::get($this->itemId, 0, 64));
-                        EconomyAPI::getInstance()->reduceMoney($player, 25000);
-                    }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
-                    }
-                    break;
-                case 3:
-                    $money = EconomyAPI::getInstance()->myMoney($player->getName());
-                    if ($money >= 25000) {
-                        $this->itemId = 20;
-                        $player->getInventory()->addItem(Item::get($this->itemId, 0, 64));
-                        EconomyAPI::getInstance()->reduceMoney($player, 25000);
-                    }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
-                    }
-                    break;
-                case 4:
-                    $money = EconomyAPI::getInstance()->myMoney($player->getName());
-                    if ($money >= 25000) {
-                        $this->itemId = 24;
-                        $player->getInventory()->addItem(Item::get($this->itemId, 0, 64));
-                        EconomyAPI::getInstance()->reduceMoney($player, 25000);
-                    }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
-                    }
-                    break;
-                case 5:
-                    $money = EconomyAPI::getInstance()->myMoney($player->getName());
-                    if ($money >= 25000) {
-                        $this->itemId = 45;
-                        $player->getInventory()->addItem(Item::get($this->itemId, 0, 64));
-                        EconomyAPI::getInstance()->reduceMoney($player, 25000);
-                    }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
-                    }
-                    break;
-                    break;
-                case 6:
-                    $money = EconomyAPI::getInstance()->myMoney($player->getName());
-                    if ($money >= 25000) {
-                        $this->itemId = 98;
-                        $player->getInventory()->addItem(Item::get($this->itemId, 0, 64));
-                        EconomyAPI::getInstance()->reduceMoney($player, 25000);
-                    }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
-                    }
-                    break;
-                case 7:
-                    $money = EconomyAPI::getInstance()->myMoney($player->getName());
-                    if ($money >= 25000) {
-                        $this->itemId = 155;
-                        $player->getInventory()->addItem(Item::get($this->itemId, 0, 64));
-                        EconomyAPI::getInstance()->reduceMoney($player, 25000);
-                    }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
-                    }
-                    break;
-                case 8:
-                    $money = EconomyAPI::getInstance()->myMoney($player->getName());
-                    if ($money >= 25000) {
-                        $this->itemId = 80;
-                        $player->getInventory()->addItem(Item::get($this->itemId, 0, 64));
-                        EconomyAPI::getInstance()->reduceMoney($player, 25000);
-                    }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
-                    }
-                    break;
-                case 9:
-                    $money = EconomyAPI::getInstance()->myMoney($player->getName());
-                    if ($money >= 25000) {
-                        $this->itemId = 1;
-                        $player->getInventory()->addItem(Item::get($this->itemId, 0, 64));
-                        EconomyAPI::getInstance()->reduceMoney($player, 25000);
-                    }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
-                    }
-                    break;
-                case 10:
-                    $money = EconomyAPI::getInstance()->myMoney($player->getName());
-                    if ($money >= 25000) {
-                        $this->itemId = 44;
-                        $player->getInventory()->addItem(Item::get($this->itemId, 0, 64));
-                        EconomyAPI::getInstance()->reduceMoney($player, 25000);
-                    }else{
-                        $player->sendMessage("You Don't Have Enough Money.");
-                    }
-                    break;
-            }
-        });
-        $form->setTitle("Blocks");
-        $name = $player->getName();
-        $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
-        $money = $eco->myMoney($name);
-        $form->setContent("Your Money: " . $money);
-        $form->addButton("Back, to main Menu!");
-        $form->addButton("Stone : $25000", 1, "textures/items/stone");
-        $form->addButton("Oak Logs : $25000", 1, "textures/items/log");
-        $form->addButton("Glass : $25000", 1, "textures/items/glass");
-        $form->addButton("Sandstone : $25000", 1, "textures/items/sandstone");
-        $form->addButton("Stone Bricks : $25000", 1, "textures/items/bricks");
-        $form->addButton("Quartz : $25000", 1, "textures/items/quartz_block");
-        $form->addButton("Snow : $25000", 1, "textures/items/snow");
-        $form->addButton("Stone Slab : $25000", 1, "textures/items/stone_slab");
-        $form->addButton("Shelf : $25000", 1, "textures/items/bookshelf");
+        $form->setContent("Dein Geld: " . $money);
+        $form->addButton("§cZurück");
+        $form->addButton("Verzauberter Goldapfel: $20000", 1, "https://www.digminecraft.com/food_recipes/images/golden_apple2.png");
+        $form->addButton("Goldapfel: $150000", 1, "https://www.digminecraft.com/food_recipes/images/golden_apple.png");
+        $form->addButton("Goldene Karotte: $10000", 1, "https://www.digminecraft.com/food_recipes/images/golden_carrot.png");
         $form->sendToPlayer($player);
     }
 }
