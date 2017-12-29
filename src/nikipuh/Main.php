@@ -44,6 +44,10 @@ class Main extends PluginBase implements Listener{
                 case 2:
                     $this->magicForm($player);
                     return;
+                case 3:
+                    //$this->kitsForm($player);
+                    $player->sendMessage("§cDieser Bereich wird noch erstellt.");
+                    return;
                     }
         });
         $form->setTitle(TextFormat::WHITE . "Hauptmenü");
@@ -53,10 +57,11 @@ class Main extends PluginBase implements Listener{
         $form->setContent("Willkommen im Menu, $name! \nDein Geld: §c" . $money);
         $form->addButton("§cVerlasse das Menü");
         $form->addButton("§0ItemShop");
-         $form->addButton("§0Verzauberungen");
+        $form->addButton("§0Verzauberungen");
+        $form->addButton("§0Kits");
         $form->sendToPlayer($player);
     }
-     public function shopForm($player){
+     public function magicForm($player){ //Enchantments
         $plugin = $this->getServer()->getPluginManager();
         $formapi = $plugin->getPlugin("FormAPI");
         $form = $formapi->createSimpleForm(function (Player $event, array $args){
@@ -68,26 +73,78 @@ class Main extends PluginBase implements Listener{
                 case 0:
                 $this->mainFrom($player);
                     return;
-                case 1:
-                    //$this->weaponsForm($player);
+                case 1: //Waffe
+      $item = $player->getInventory()->getItemInHand();
+      $enchantment = Enchantment::getEnchantment(mt_rand(9, 14))->setLevel((int)rand(1,2));;
+      $money = EconomyAPI::getInstance()->myMoney($player);
+		if($money < 50){
+		$player->sendMessage("Du hast nicht genug Geld!");
+		}elseif($item instanceof Weapon){
+			EconomyAPI::getInstance()->reduceMoney($player, 50);
+			$item->addEnchantment($enchantment);
+            $player->getInventory()->setItemInHand($item);
+			$player->sendMessage("Dein Item wurde verzaubert!");
+		}else{
+            $player->sendMessage("Dein Item ist keine Waffe!");
+        }
                     return;
-                case 2:
-                    //$this->toolsForm($player);
+                case 2://Werkzeug
+      $item = $player->getInventory()->getItemInHand();
+      $enchantment = Enchantment::getEnchantment(mt_rand(15, 18))->setLevel((int)rand(1,3));;
+      $money = EconomyAPI::getInstance()->myMoney($player);
+		if($money < 25){
+		$player->sendMessage("Du hast nicht genug Geld!");
+		}elseif($item instanceof Tool){
+			EconomyAPI::getInstance()->reduceMoney($player, 25);
+			$item->addEnchantment($enchantment);
+            $player->getInventory()->setItemInHand($item);
+			$player->sendMessage("Dein Item wurde verzaubert!");
+		}else{
+            $player->sendMessage("Dein Item ist kein Werkzeug!");
+        }
                     return;
                 case 3:
-                    //$this->armorsForm($player);
+                    $item = $player->getInventory()->getItemInHand();
+      $enchantment = Enchantment::getEnchantment(mt_rand(0, 5))->setLevel((int)rand(1,4));;
+      $money = EconomyAPI::getInstance()->myMoney($player);
+		if($money < 25){
+		$player->sendMessage("Du hast nicht genug Geld!");
+		}elseif($item instanceof Armor){
+			EconomyAPI::getInstance()->reduceMoney($player, 25);
+			$item->addEnchantment($enchantment);
+            $player->getInventory()->setItemInHand($item);
+			$player->sendMessage("Dein Item wurde verzaubert!");
+		}else{
+            $player->sendMessage("Dein Item ist kein Rüstungsteil!");
+        }
+                    return;
+                    case 4: //Bogen
+                    $item = $player->getInventory()->getItemInHand();
+      $enchantment = Enchantment::getEnchantment(mt_rand(19, 22))->setLevel((int)rand(1,5));;
+      $money = EconomyAPI::getInstance()->myMoney($player);
+		if($money < 15){
+		$player->sendMessage("Du hast nicht genug Geld!");
+		}elseif($item instanceof Bow){
+			EconomyAPI::getInstance()->reduceMoney($player, 15);
+			$item->addEnchantment($enchantment);
+            $player->getInventory()->setItemInHand($item);
+			$player->sendMessage("Dein Item wurde verzaubert!");
+		}else{
+            $player->sendMessage("Dein Item ist kein Bogen!");
+        }
                     return;
             }
         });
-        $form->setTitle(TextFormat::WHITE . "ItemShop");
+        $form->setTitle(TextFormat::WHITE . "Verzauberungen");
         $name = $player->getName();
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
-        $form->setContent("Dein Geld: $money\n§cDieser Bereich folgt demnächst.");
-        $form->addButton(TextFormat::GREEN."§cZurück");
-        $form->addButton(TextFormat::WHITE."§0Waffen verzaubern");
-        $form->addButton(TextFormat::WHITE."§0Werkzeuge verzaubern");
-        $form->addButton(TextFormat::WHITE."§0Rüstungsteile verzaubern");
+        $form->setContent("Dein Geld: $money\n§cBitte gehe sicher das du das Item in der Hand hast!");
+        $form->addButton(TextFormat::GREEN."§7Zurück zum Hauptmenü");
+        $form->addButton(TextFormat::WHITE."§0Waffen verzaubern: 50 Coins");
+        $form->addButton(TextFormat::WHITE."§0Werkzeuge verzaubern: 25 Coins");
+        $form->addButton(TextFormat::WHITE."§0Rüstungsteile verzaubern: 25 Coins");
+        $form->addButton(TextFormat::WHITE."§0Bogen verzaubern: 15 Coins");
         $form->sendToPlayer($player);
     }
     public function shopForm($player){
@@ -121,7 +178,7 @@ class Main extends PluginBase implements Listener{
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
         $form->setContent("Dein Geld: " . $money);
-        $form->addButton(TextFormat::GREEN."§cZurück");
+        $form->addButton(TextFormat::GREEN."§7Zurück zum Hauptmenü");
         $form->addButton(TextFormat::WHITE."§0Waffen");
         $form->addButton(TextFormat::WHITE."§0Werkzeuge");
         $form->addButton(TextFormat::WHITE."§0Rüstungsteile");
@@ -224,7 +281,7 @@ class Main extends PluginBase implements Listener{
         $money = $eco->myMoney($name);
         $form->setContent("Dein Geld: " . $money);
         $form->addButton("Zurück zum ShopMenü");
-        $form->addButton("§0Holzschwert: 1 Coins", 0, "textures/items/wood_sword");
+        $form->addButton("§0Holzschwert: 1 Coin", 0, "textures/items/wood_sword");
         $form->addButton("§0Steinschwert: 2 Coins", 0, "textures/items/stone_sword");
         $form->addButton("§0Goldschwert: 5 Coins", 0, "textures/items/gold_sword");
         $form->addButton("§0Eisenschwert: 10 Coins", 0, "textures/items/iron_sword");
@@ -242,7 +299,7 @@ class Main extends PluginBase implements Listener{
             }
             switch($result){
                 case 0:
-                    $this->mainFrom($player);
+                    $this->ShopForm($player);
                     break;
                 case 1:
                     $money = EconomyAPI::getInstance()->myMoney($player->getName());
@@ -306,12 +363,12 @@ class Main extends PluginBase implements Listener{
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
         $form->setContent("Dein Geld: $money\nDieser Bereich ist noch nicht vollendet.");
-        $form->addButton("§cZurück");
-        $form->addButton("§0Diamantenspitzhacke : 10 Coins", 0, "textures/items/diamond_pickaxe");
+        $form->addButton("§7Zurück zum Shopmenü");
+        $form->addButton("§0Diamantenspitzhacke: 10 Coins", 0, "textures/items/diamond_pickaxe");
         $form->addButton("§0Goldspitzhacke: 5 Coins", 0, "textures/items/gold_pickaxe");
         $form->addButton("§0Eisenspitzhacke: 4 Coins", 0, "textures/items/iron_pickaxe");
         $form->addButton("§0Steinspitzhacke: 3 Coins", 0, "textures/items/stone_pickaxe");
-        $form->addButton("§0Holzspitzhacke: 1 Coins", 0, "textures/items/wood_pickaxe");
+        $form->addButton("§0Holzspitzhacke: 1 Coin", 0, "textures/items/wood_pickaxe");
         $form->sendToPlayer($player);
     }
     public function armorsForm($player){
@@ -323,7 +380,7 @@ class Main extends PluginBase implements Listener{
             }
             switch($result){
                 case 0:
-                    $this->mainFrom($player);
+                    $this->ShopForm($player);
                     break;
                 case 1:
                     $money = EconomyAPI::getInstance()->myMoney($player->getName());
@@ -552,7 +609,7 @@ class Main extends PluginBase implements Listener{
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
         $form->setContent("Dein Geld: " . $money);
-        $form->addButton("§cZurück");
+        $form->addButton("§7Zurück zum ShopMenü");
         //DIAMOND
         $form->addButton("§0Diamantenhelm: 25 Coins", 0, "textures/items/diamond_helmet");
         $form->addButton("§0Diamantenbrustplatte: 25 Coins", 0, "textures/items/diamond_chestplate");
@@ -589,7 +646,7 @@ class Main extends PluginBase implements Listener{
             }
             switch($result){
                 case 0:
-                    $this->mainFrom($player);
+                    $this->ShopForm($player);
                     break;
                 case 1:
                     $money = EconomyAPI::getInstance()->myMoney($player->getName());
@@ -642,11 +699,11 @@ class Main extends PluginBase implements Listener{
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
         $form->setContent("Dein Geld: " . $money);
-        $form->addButton("§cZurück");
+        $form->addButton("§7Zurück zum Shopmenü");
         $form->addButton("Verzauberter Goldapfel: 15 Coins", 1, "https://www.digminecraft.com/food_recipes/images/golden_apple2.png");
         $form->addButton("Goldapfel: 10 Coins", 1, "https://www.digminecraft.com/food_recipes/images/golden_apple.png");
         $form->addButton("Goldene Karotte: 5 Coins", 1, "https://www.digminecraft.com/food_recipes/images/golden_carrot.png");
-        $form->addButton("Enderperle: 10 Coins", 0, "textures/items/enderpearl");
+        $form->addButton("Enderperle: 10 Coins", 0, "https://www.digminecraft.com/materials/images/ender_pearl.png");
         $form->sendToPlayer($player);
     }
 }
