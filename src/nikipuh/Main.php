@@ -48,9 +48,6 @@ class Main extends PluginBase implements Listener{
                     //$this->kitsForm($player);
                     $player->sendMessage("§cDieser Bereich wird noch erstellt.");
                     return;
-		    case 4:
-                    $this->kontoForm($player);
-                    return;
                     }
         });
         $form->setTitle(TextFormat::WHITE . "Hauptmenü");
@@ -62,29 +59,6 @@ class Main extends PluginBase implements Listener{
         $form->addButton("§0ItemShop");
         $form->addButton("§0Verzauberungen");
         $form->addButton("§0Kits");
-	$form->addButton("§7Dein Konto");
-        $form->sendToPlayer($player);
-    }
-	    public function kontoForm($player){
-        $plugin = $this->getServer()->getPluginManager();
-        $formapi = $plugin->getPlugin("FormAPI");
-        $form = $formapi->createSimpleForm(function (Player $event, array $args){
-            $result = $args[0];
-            $player = $event->getPlayer();
-            if($result === null){
-            }
-            switch($result){
-                case 0:
-			    $this->mainFrom($player);
-                    return;
-                    }
-        });
-        $form->setTitle(TextFormat::WHITE . "Hauptmenü");
-        $name = $player->getName();
-        $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
-        $money = $eco->myMoney($name);
-        $form->setContent("Willkommen im Menü, $name!\n\nDein Geld: §c$money§r\n\n§eDu bekommst Coins wenn du auf '§fbit.ky/kkvoten§e' für den Server abstimmst.\n\nDu kannst deine Coins mit '§f/pay <Name>§e' auf einen anderen Account übertragen.\n\n");
-        $form->addButton("§7Zurück zum Hauptmenü");
         $form->sendToPlayer($player);
     }
      public function magicForm($player){ //Enchantments
