@@ -48,17 +48,44 @@ class Main extends PluginBase implements Listener{
                     //$this->kitsForm($player);
                     $player->sendMessage("§cDieser Bereich wird noch erstellt.");
                     return;
+		    case 4:
+                    //$this->kontoForm($player);
+                    $player->sendMessage("§cDieser Bereich wird noch erstellt.");
+                    return;
                     }
         });
         $form->setTitle(TextFormat::WHITE . "Hauptmenü");
         $name = $player->getName();
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
-        $form->setContent("Willkommen im Menu, $name! \nDein Geld: §c" . $money);
+        $form->setContent("Willkommen im Menü, $name! \nDein Geld: §c" . $money);
         $form->addButton("§cVerlasse das Menü");
         $form->addButton("§0ItemShop");
         $form->addButton("§0Verzauberungen");
         $form->addButton("§0Kits");
+	$form->addButton("§7Dein Konto");
+        $form->sendToPlayer($player);
+    }
+	    public function mainFrom($player){
+        $plugin = $this->getServer()->getPluginManager();
+        $formapi = $plugin->getPlugin("FormAPI");
+        $form = $formapi->createSimpleForm(function (Player $event, array $args){
+            $result = $args[0];
+            $player = $event->getPlayer();
+            if($result === null){
+            }
+            switch($result){
+                case 0:
+			    $this->mainFrom($player);
+                    return;
+                    }
+        });
+        $form->setTitle(TextFormat::WHITE . "Hauptmenü");
+        $name = $player->getName();
+        $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
+        $money = $eco->myMoney($name);
+        $form->setContent("Willkommen im Menü, $name!\n\nDein Geld: §c$money§r\n\n§eDu bekommst Coins wenn du auf '§fbit.ky/kkvoten§e' für den Server abstimmst.\n\nDu kannst deine Coins mit '§f/pay <Name>§e' auf einen anderen Account übertragen.\n\n");
+        $form->addButton("§7Zurück zum Hauptmenü");
         $form->sendToPlayer($player);
     }
      public function magicForm($player){ //Enchantments
@@ -79,14 +106,12 @@ class Main extends PluginBase implements Listener{
       $money = EconomyAPI::getInstance()->myMoney($player);
 		if($money < 50){
 		$player->sendMessage("Du hast nicht genug Geld!");
-		}elseif($item instanceof Weapon){
+		}else{
 			EconomyAPI::getInstance()->reduceMoney($player, 50);
 			$item->addEnchantment($enchantment);
             $player->getInventory()->setItemInHand($item);
 			$player->sendMessage("Dein Item wurde verzaubert!");
-		}else{
-            $player->sendMessage("Dein Item ist keine Waffe!");
-        }
+		}
                     return;
                 case 2://Werkzeug
       $item = $player->getInventory()->getItemInHand();
@@ -94,14 +119,12 @@ class Main extends PluginBase implements Listener{
       $money = EconomyAPI::getInstance()->myMoney($player);
 		if($money < 25){
 		$player->sendMessage("Du hast nicht genug Geld!");
-		}elseif($item instanceof Tool){
+		}else{
 			EconomyAPI::getInstance()->reduceMoney($player, 25);
 			$item->addEnchantment($enchantment);
             $player->getInventory()->setItemInHand($item);
 			$player->sendMessage("Dein Item wurde verzaubert!");
-		}else{
-            $player->sendMessage("Dein Item ist kein Werkzeug!");
-        }
+		}
                     return;
                 case 3:
                     $item = $player->getInventory()->getItemInHand();
@@ -109,14 +132,12 @@ class Main extends PluginBase implements Listener{
       $money = EconomyAPI::getInstance()->myMoney($player);
 		if($money < 25){
 		$player->sendMessage("Du hast nicht genug Geld!");
-		}elseif($item instanceof Armor){
+		}else{
 			EconomyAPI::getInstance()->reduceMoney($player, 25);
 			$item->addEnchantment($enchantment);
             $player->getInventory()->setItemInHand($item);
 			$player->sendMessage("Dein Item wurde verzaubert!");
-		}else{
-            $player->sendMessage("Dein Item ist kein Rüstungsteil!");
-        }
+		}
                     return;
                     case 4: //Bogen
                     $item = $player->getInventory()->getItemInHand();
@@ -124,14 +145,12 @@ class Main extends PluginBase implements Listener{
       $money = EconomyAPI::getInstance()->myMoney($player);
 		if($money < 15){
 		$player->sendMessage("Du hast nicht genug Geld!");
-		}elseif($item instanceof Bow){
+		}else{
 			EconomyAPI::getInstance()->reduceMoney($player, 15);
 			$item->addEnchantment($enchantment);
             $player->getInventory()->setItemInHand($item);
 			$player->sendMessage("Dein Item wurde verzaubert!");
-		}else{
-            $player->sendMessage("Dein Item ist kein Bogen!");
-        }
+		}
                     return;
             }
         });
@@ -139,7 +158,7 @@ class Main extends PluginBase implements Listener{
         $name = $player->getName();
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
-        $form->setContent("Dein Geld: $money\n§cBitte gehe sicher das du das Item in der Hand hast!");
+        $form->setContent("Dein Geld: $money\n§cBitte gehe sicher das du das richtige Item in der Hand hast!");
         $form->addButton(TextFormat::GREEN."§7Zurück zum Hauptmenü");
         $form->addButton(TextFormat::WHITE."§0Waffen verzaubern: 50 Coins");
         $form->addButton(TextFormat::WHITE."§0Werkzeuge verzaubern: 25 Coins");
