@@ -65,7 +65,7 @@ class Main extends PluginBase implements Listener{
 	$form->addButton("§7Dein Konto");
         $form->sendToPlayer($player);
     }
-	    public function kontoFrom($player){
+	    public function kontoForm($player){
         $plugin = $this->getServer()->getPluginManager();
         $formapi = $plugin->getPlugin("FormAPI");
         $form = $formapi->createSimpleForm(function (Player $event, array $args){
