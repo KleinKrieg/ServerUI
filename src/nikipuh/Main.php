@@ -49,8 +49,7 @@ class Main extends PluginBase implements Listener{
                     $player->sendMessage("§cDieser Bereich wird noch erstellt.");
                     return;
 		    case 4:
-                    //$this->kontoForm($player);
-                    $player->sendMessage("§cDieser Bereich wird noch erstellt.");
+                    $this->kontoForm($player);
                     return;
                     }
         });
@@ -66,7 +65,7 @@ class Main extends PluginBase implements Listener{
 	$form->addButton("§7Dein Konto");
         $form->sendToPlayer($player);
     }
-	    public function mainFrom($player){
+	    public function kontoFrom($player){
         $plugin = $this->getServer()->getPluginManager();
         $formapi = $plugin->getPlugin("FormAPI");
         $form = $formapi->createSimpleForm(function (Player $event, array $args){
