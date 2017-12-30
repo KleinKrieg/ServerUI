@@ -61,6 +61,83 @@ class Main extends PluginBase implements Listener{
         $form->addButton("§0Kits");
         $form->sendToPlayer($player);
     }
+	     public function kitsForm($player){ //Enchantments
+        $plugin = $this->getServer()->getPluginManager();
+        $formapi = $plugin->getPlugin("FormAPI");
+        $form = $formapi->createSimpleForm(function (Player $event, array $args){
+            $result = $args[0];
+            $player = $event->getPlayer();
+            if($result === null){
+            }
+            switch($result){
+                case 0:
+                $this->mainFrom($player);
+                    return;
+                case 1:
+			    $this->kitspawnerForm($player);
+                    return;
+		case 2:
+			    //$this->kitkaempferForm($player);
+			    $player->sendMessage("§cDieser Bereich wird noch erstellt.");
+                    return;
+                case 3:
+			    //$this->kitmagierForm($player);
+			    $player->sendMessage("§cDieser Bereich wird noch erstellt.");
+                    return;
+                case 4:
+			    //$this->kitDemonForm($player);
+			    $player->sendMessage("§cDieser Bereich wird noch erstellt.");
+                    return;
+            }
+        });
+        $form->setTitle(TextFormat::WHITE . "Kits");
+        $name = $player->getName();
+        $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
+        $money = $eco->myMoney($name);
+        $form->setContent("Dein Geld: $money\n§cBitte gehe sicher dass du Platz in deinem Inventar hast!");
+        $form->addButton(TextFormat::GREEN."§7Zurück zum Hauptmenü");
+        $form->addButton(TextFormat::WHITE."§0Spawner-Kit");
+        $form->addButton(TextFormat::WHITE."§0Kämpfer-Kit");
+        $form->addButton(TextFormat::WHITE."§0Magier-Kit");
+        $form->addButton(TextFormat::WHITE."§0Dämon-Kit");
+        $form->sendToPlayer($player);
+    }
+	public function kitspawnerForm($player){ //Enchantments
+        $plugin = $this->getServer()->getPluginManager();
+        $formapi = $plugin->getPlugin("FormAPI");
+        $form = $formapi->createSimpleForm(function (Player $event, array $args){
+            $result = $args[0];
+            $player = $event->getPlayer();
+            if($result === null){
+            }
+            switch($result){
+                case 0:
+                $this->kitsForm($player);
+                    return;
+                case 1:
+			    $player->getInventory()->addItem(Item::get(383, 10, 1)); //Huhn
+			    $player->getInventory()->addItem(Item::get(383, 11, 1)); //Kuh
+			    $player->getInventory()->addItem(Item::get(383, 12, 1)); //Schwein
+			    $player->getInventory()->addItem(Item::get(383, 13, 1)); //Schaf
+			    $player->sendMessage("§7Du hast das Kit Spawner erhalten.");
+			    if($player->hasPermission("premium.kits")) {
+				    $player->getInventory()->addItem(Item::get(383, 16, 1)); //Pilzkuh
+				    $player->sendMessage("§7Du besitzt Premium und bekommst ein Kreaturenei dazu (Pilzkuh).");
+			    }else{
+				    $player->sendMessage("§7Du hast kein Premium.");
+			    }
+                    return;
+            }
+        });
+        $form->setTitle(TextFormat::WHITE . "Spawner-Kit");
+        $name = $player->getName();
+        $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
+        $money = $eco->myMoney($name);
+        $form->setContent("Dein Geld: $money\n§cBitte gehe sicher dass du §l5§r§c Plätze in deinem Inventar frei hast!\n§fDas Spawner-Kit enthält:§e\n1x Ei für Kuh\n1x Ei für Schwein\n1x Ei für Schaf\n1x Ei für Huhn\n\n§6Wenn du Premium-Spieler bist:\n1x Ei für Pilzkuh\n");
+        $form->addButton(TextFormat::GREEN."§7Zurück zum KitMenü");
+        $form->addButton(TextFormat::WHITE."§0Spawner-Kit: 20 Coins");
+        $form->sendToPlayer($player);
+    }
      public function magicForm($player){ //Enchantments
         $plugin = $this->getServer()->getPluginManager();
         $formapi = $plugin->getPlugin("FormAPI");
@@ -131,7 +208,7 @@ class Main extends PluginBase implements Listener{
         $name = $player->getName();
         $eco = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         $money = $eco->myMoney($name);
-        $form->setContent("Dein Geld: $money\n§cBitte gehe sicher das du das richtige Item in der Hand hast!");
+        $form->setContent("Dein Geld: $money\n§cBitte gehe sicher dass du das richtige Item in der Hand hast!");
         $form->addButton(TextFormat::GREEN."§7Zurück zum Hauptmenü");
         $form->addButton(TextFormat::WHITE."§0Waffen verzaubern: 50 Coins");
         $form->addButton(TextFormat::WHITE."§0Werkzeuge verzaubern: 25 Coins");
