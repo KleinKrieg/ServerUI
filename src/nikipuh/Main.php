@@ -45,8 +45,7 @@ class Main extends PluginBase implements Listener{
                     $this->magicForm($player);
                     return;
                 case 3:
-                    //$this->kitsForm($player);
-                    $player->sendMessage("§cDieser Bereich wird noch erstellt.");
+                    $this->kitsForm($player);
                     return;
                     }
         });
