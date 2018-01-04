@@ -115,6 +115,11 @@ class Main extends PluginBase implements Listener{
                 $this->kitsForm($player);
                     return;
                 case 1:
+		$money = EconomyAPI::getInstance()->myMoney($player);
+		if($money < 20){
+		$player->sendMessage("Du hast nicht genug Geld!");
+		}else{
+			EconomyAPI::getInstance()->reduceMoney($player, 20);
 			    $player->getInventory()->addItem(Item::get(383, 10, 1)); //Huhn
 			    $player->getInventory()->addItem(Item::get(383, 11, 1)); //Kuh
 			    $player->getInventory()->addItem(Item::get(383, 12, 1)); //Schwein
@@ -125,7 +130,7 @@ class Main extends PluginBase implements Listener{
 				    $player->sendMessage("§7Du besitzt Premium und bekommst ein Kreaturenei dazu (Pilzkuh).");
 			    }else{
 				    $player->sendMessage("§7Du hast kein Premium.");
-			    }
+			    }}
                     return;
             }
         });
