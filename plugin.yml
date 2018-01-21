@@ -1,7 +1,7 @@
 name: BanUI
 main: nikipuh\Main
 api: 3.0.0-ALPHA10
-version: 1.0
+version: 1.0.1
 author: LeNick
 commands:
  admin:
