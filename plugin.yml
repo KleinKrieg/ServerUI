@@ -1,8 +1,8 @@
-name: ServerUI
+name: BanUI
 main: nikipuh\Main
 api: 3.0.0-ALPHA10
 version: 1.0
 author: LeNick
 commands:
- menü:
+ admin:
     default: true
